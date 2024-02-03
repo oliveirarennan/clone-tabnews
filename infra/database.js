@@ -8,21 +8,22 @@ async function query(queryObject) {
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
   });
-  await client.connect();
 
-  try{
+  try {
+    await client.connect();
 
     const result = await client.query(queryObject);
 
     return result;
 
-  }catch(error){
+  } catch (error) {
     console.error(error)
-  }finally {
+    throw error;
+  } finally {
     client.end();
   }
 
-  
+
 }
 
 export default {
